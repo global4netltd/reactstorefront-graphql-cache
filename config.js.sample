@@ -1,0 +1,5 @@
+module.exports = {
+    MAGENTO_BACKEND_URL: 'http://m2url/graphql',
+    PORT: 3000,
+    TTL: 3600
+};
