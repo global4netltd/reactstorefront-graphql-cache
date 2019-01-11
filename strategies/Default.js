@@ -5,22 +5,22 @@ const config = require('./../config');
 
 class Default extends AbstractStrategy {
 
-    getFromCache(queryObject) {
-        const requestHash = this.getHash(queryObject);
+    getFromCache(requestBody) {
+        const requestHash = this.getHash(requestBody);
         const cachedValue = this.cache.get(requestHash);
         if (cachedValue) {
             const {data, ttl, timeStored} = cachedValue;
             const now = Date.now();
             if (data && ttl && now - timeStored <= ttl * 1000) {
-                return data
+                return data;
             }
             this.cache.delete(requestHash);
         }
         return false;
     }
 
-    addToCache(queryObject, data){
-        const requestHash = this.getHash(queryObject);
+    addToCache(requestBody, data){
+        const requestHash = this.getHash(requestBody);
         const timeStored = Date.now();
         const ttl = config.TTL;
         this.cache.set(requestHash, {ttl, timeStored, data})

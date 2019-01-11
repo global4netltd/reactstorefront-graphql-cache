@@ -2,19 +2,18 @@ const {resolveStrategy} = require('./strategy-resolver');
 
 class CacheApp {
 
-    getFromCache(queryObject) {
-        const strategy = this.getStrategy(queryObject);
-        return strategy.getFromCache(queryObject);
+    getFromCache(request) {
+        const strategy = this.getStrategy(request);
+        return strategy.getFromCache(request.body);
     }
 
-    addToCache(queryObject, response) {
-        const strategy = this.getStrategy(queryObject);
-        return strategy.addToCache(queryObject, response.data);
+    addToCache(request, response) {
+        const strategy = this.getStrategy(request);
+        return strategy.addToCache(request.body, response.data);
     }
 
-    getStrategy(queryObject){
-        const name = queryObject.definitions[0].selectionSet.selections[0].name.value;
-        return resolveStrategy(name);
+    getStrategy(request){
+        return resolveStrategy(request.body.operationName);
     }
 }
 
