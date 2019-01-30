@@ -1,19 +1,18 @@
-const {resolveStrategy} = require('./strategy-resolver');
+
+const {setVariablesValues} = require('./utils/common');
+const resolveStrategy = require('./strategy-resolver');
 
 class CacheApp {
 
-    getFromCache(request) {
-        const strategy = this.getStrategy(request);
-        return strategy.getFromCache(request.body);
+    getFromCache(query, context) {
+        setVariablesValues(query.arguments, context.variables);
+        const strategy = resolveStrategy(query.name.value);
+        return strategy.getFromCache(query);
     }
 
-    addToCache(request, response) {
-        const strategy = this.getStrategy(request);
-        return strategy.addToCache(request.body, response.data);
-    }
-
-    getStrategy(request){
-        return resolveStrategy(request.body.operationName);
+    addToCache(query, data) {
+        const strategy = resolveStrategy(query.name.value);
+        return strategy.addToCache(query, data);
     }
 }
 

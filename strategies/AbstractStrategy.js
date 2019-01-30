@@ -5,11 +5,11 @@ class AbstractStrategy {
         this.cache = new Map();
     }
 
-    getFromCache(queryObject) {
+    getFromCache(queryObject, context) {
         return false
     }
 
-    addToCache(queryObject, data){
+    addToCache(queryObject, data, context){
         return false
     }
 

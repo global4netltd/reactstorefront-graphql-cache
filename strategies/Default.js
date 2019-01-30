@@ -5,7 +5,7 @@ const config = require('./../config');
 
 class Default extends AbstractStrategy {
 
-    getFromCache(requestBody) {
+    getFromCache(requestBody, context) {
         const requestHash = this.getHash(requestBody);
         const cachedValue = this.cache.get(requestHash);
         if (cachedValue) {
@@ -19,7 +19,7 @@ class Default extends AbstractStrategy {
         return false;
     }
 
-    addToCache(requestBody, data){
+    addToCache(requestBody, data, context){
         const requestHash = this.getHash(requestBody);
         const timeStored = Date.now();
         const ttl = config.TTL;

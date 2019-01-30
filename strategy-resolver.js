@@ -1,15 +1,15 @@
-const Test = require('./strategies/Test');
+const MsProducts = require('./strategies/MsProducts');
 const Default = require('./strategies/Default');
 
 
 const DefaultStrategy = new Default();
-const TestStrategy = new Test();
+const MsProductsStrategy = new MsProducts();
 
 const strategiesMap = {
-    test: TestStrategy,
+    msProducts: MsProductsStrategy,
 //    Implement strategies...
 };
 
-exports.resolveStrategy = name => {
-    return strategiesMap[name] ? strategiesMap[name] : DefaultStrategy;
-};
+const resolveStrategy = name => strategiesMap[name] ? strategiesMap[name] : DefaultStrategy;
+
+module.exports = resolveStrategy;
